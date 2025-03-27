@@ -1,0 +1,173 @@
+/* Custom CESO Theme Styles */
+
+/* Fix for status bar overlap */
+ion-header {
+  position: relative;
+  padding-top: var(--ion-safe-area-top, 12px);
+  margin-top: 0;
+  z-index: 999;
+}
+
+ion-toolbar {
+  --min-height: 56px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  margin-top: 0;
+}
+
+ion-content {
+  --padding-top: calc(var(--ion-safe-area-top, 24px) + 76px);
+  --background: #f9f9f9;
+}
+
+/* Card styling */
+ion-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+  border-top: 3px solid var(--ion-color-primary);
+}
+
+ion-card-header {
+  background-color: rgba(229, 57, 53, 0.05);
+}
+
+ion-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+/* List styling */
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  --background: transparent;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+ion-item:hover {
+  --background: rgba(229, 57, 53, 0.05);
+}
+
+/* Menu styling */
+ion-menu ion-content {
+  --background: #fff;
+}
+
+ion-menu ion-list {
+  padding: 0;
+}
+
+ion-menu ion-list-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+ion-menu ion-note {
+  color: var(--ion-color-medium);
+  margin-bottom: 20px;
+  padding-left: 16px;
+  font-size: 0.9rem;
+}
+
+ion-menu ion-item {
+  --padding-start: 16px;
+  --min-height: 50px;
+  font-weight: 500;
+}
+
+ion-menu ion-item.selected {
+  --background: rgba(229, 57, 53, 0.1);
+  --color: var(--ion-color-primary);
+  border-left: 3px solid var(--ion-color-primary);
+}
+
+ion-menu ion-item ion-icon {
+  color: var(--ion-color-medium);
+}
+
+ion-menu ion-item.selected ion-icon {
+  color: var(--ion-color-primary);
+}
+
+/* Toolbar styling */
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --color: white;
+}
+
+/* Button styling */
+ion-button {
+  --border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Grid styling for gallery */
+ion-grid ion-col {
+  padding: 8px;
+}
+
+/* Image styling */
+ion-img {
+  border-radius: 10px 10px 0 0;
+}
+
+/* Badge styling */
+ion-badge {
+  border-radius: 16px;
+  padding: 6px 12px;
+}
+
+/* Header image banner */
+.header-banner {
+  height: 150px;
+  width: 100%;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Section headers */
+.section-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  margin: 20px 0 10px 16px;
+}
+
+/* Event card */
+.event-card {
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+/* Stats card */
+.stats-card {
+  text-align: center;
+  padding: 16px;
+}
+
+.stats-card .number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.stats-card .label {
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+}
+/* Add vertical padding to the header on mobile view */
+@media (max-width: 768px) {
+  ion-header {
+    padding-top: calc(var(--ion-safe-area-top, 12px) + 10px);
+    padding-bottom: 10px;
+  }
+}
+
