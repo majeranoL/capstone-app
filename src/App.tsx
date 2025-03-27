@@ -65,7 +65,7 @@ const App: React.FC = () => {
     <AuthProvider>
       <IonApp>
         <IonReactRouter>
-          <IonSplitPane contentId="main">
+          <IonSplitPane contentId="main" when={window.location.pathname !== '/login' && window.location.pathname !== '/register'}>
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/login" component={Login} exact />
