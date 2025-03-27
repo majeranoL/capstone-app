@@ -35,7 +35,18 @@ const About: React.FC = () => {
       </IonHeader>
       <IonContent className="ion-padding">
         {/* Banner Image */}
-        <IonImg src="/placeholder.svg?height=150&width=800" alt="About CESO Banner" className="header-banner" />
+        <IonImg 
+          src="Malasakit.jpg" 
+          alt="About CESO Banner" 
+          className="header-banner" 
+          style={{ 
+            width: '100%', 
+            height: '300px', 
+            marginBottom: '1rem',
+            objectFit: 'fill',
+            
+          }} 
+        />
 
         {/* About Card */}
         <IonCard>

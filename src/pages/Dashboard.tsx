@@ -24,7 +24,7 @@ import SafeArea from "../components/SafeArea"
 
 const Dashboard: React.FC = () => {
   return (
-    <IonPage>
+    <IonPage id="main">
       <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">

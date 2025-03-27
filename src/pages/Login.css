@@ -11,3 +11,35 @@
   text-decoration: none;
 }
 
+ion-item {
+  --background: transparent;
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 45px;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: none;
+  border: 1px solid #ddd;
+}
+
+ion-item::part(native) {
+  padding: 0;
+}
+
+ion-item.item-has-focus {
+  border-color: var(--ion-color-primary);
+  border-width: 2px;
+}
+
+ion-input {
+  --padding-start: 16px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --placeholder-color: #666;
+  --placeholder-font-weight: 400;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+

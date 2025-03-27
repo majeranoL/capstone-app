@@ -22,8 +22,9 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
-  --min-height: 56px;
+  --min-height: 45px;  /* reduced from 56px */
   margin-bottom: 20px;
+  margin-top: 16px;  /* Added to make space for label */
   position: relative;
   box-shadow: none;
   border: 1px solid #ddd;
@@ -40,32 +41,35 @@
 
 .register-form ion-item.item-has-value ion-label,
 .register-form ion-item.item-has-focus ion-label {
-  background-color: white;
-  padding: 0 5px;
   color: var(--ion-color-primary);
-  top: 0;
-  transform: translateY(-50%) scale(0.8);
+  background-color: transparent;
 }
 
 .register-form ion-label {
   position: absolute;
   left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: -20px;
+  transform: none;
   margin: 0;
-  padding: 0 5px;
-  background: transparent;
+  padding: 0 4px;
+  background: white;
   z-index: 1;
   transition: all 0.2s ease;
   pointer-events: none;
   color: #666;
+  font-size: 12px;
+  width: auto;
 }
 
 .register-form ion-input {
-  --padding-start: 0;
+  --padding-start: 16px;
   --padding-top: 8px;
   --padding-bottom: 8px;
-  margin-top: 8px;
+  --placeholder-color: #666;
+  --placeholder-font-weight: 400;
+  text-align: left;  /* Changed from center to left */
+  display: flex;
+  align-items: center;
 }
 
 .register-title {

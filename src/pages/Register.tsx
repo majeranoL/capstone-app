@@ -57,42 +57,36 @@ const Register: React.FC = () => {
 
             <IonList className="ion-padding">
               <IonItem>
-                <IonLabel position="floating">
-                  First Name <IonText color="danger">*</IonText>
-                </IonLabel>
                 <IonInput
                   required
+                  placeholder="First Name *"
                   value={formData.firstName}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, firstName: e.detail.value! }))}
                 />
               </IonItem>
 
               <IonItem>
-                <IonLabel position="floating">Last Name</IonLabel>
                 <IonInput
+                  placeholder="Last Name"
                   value={formData.lastName}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, lastName: e.detail.value! }))}
                 />
               </IonItem>
 
               <IonItem>
-                <IonLabel position="floating">
-                  Username <IonText color="danger">*</IonText>
-                </IonLabel>
                 <IonInput
                   required
+                  placeholder="Username *"
                   value={formData.username}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, username: e.detail.value! }))}
                 />
               </IonItem>
 
               <IonItem>
-                <IonLabel position="floating">
-                  Email <IonText color="danger">*</IonText>
-                </IonLabel>
                 <IonInput
                   type="email"
                   required
+                  placeholder="Email *"
                   value={formData.email}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, email: e.detail.value! }))}
                 >
@@ -101,9 +95,9 @@ const Register: React.FC = () => {
               </IonItem>
 
               <IonItem>
-                <IonLabel position="floating">Password</IonLabel>
                 <IonInput
                   type="password"
+                  placeholder="Password"
                   value={formData.password}
                   onIonChange={(e) => handlePasswordChange(e.detail.value!)}
                 >
@@ -118,9 +112,9 @@ const Register: React.FC = () => {
               </div>
 
               <IonItem>
-                <IonLabel position="floating">Confirm Password</IonLabel>
                 <IonInput
                   type="password"
+                  placeholder="Confirm Password"
                   value={formData.confirmPassword}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, confirmPassword: e.detail.value! }))}
                 >

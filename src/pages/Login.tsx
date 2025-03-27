@@ -78,14 +78,13 @@ const Login: React.FC = () => {
             <IonCol size="12" sizeMd="8" sizeLg="6">
               <div className="ion-text-center ion-padding">
                 <IonImg
-                  src="/placeholder.svg?height=100&width=100"
+                  src="/placeholder.svg?height=80&width=80"
                   alt="CESO Logo"
                   style={{ margin: "0 auto", width: "100px", height: "100px" }}
                 />
                 <h1 style={{ color: "var(--ion-color-primary)" }}>CESO</h1>
                 <p>Community Extension Services Office</p>
               </div>
-
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>{isLogin ? "Login to Your Account" : "Create an Account"}</IonCardTitle>
@@ -93,14 +92,19 @@ const Login: React.FC = () => {
                 <IonCardContent>
                   <form onSubmit={handleSubmit}>
                     <IonItem>
-                      <IonLabel position="floating">Email</IonLabel>
-                      <IonInput type="email" value={email} onIonChange={(e) => setEmail(e.detail.value!)} required />
+                      <IonInput
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onIonChange={(e) => setEmail(e.detail.value!)}
+                        required
+                      />
                     </IonItem>
 
                     <IonItem className="ion-margin-bottom">
-                      <IonLabel position="floating">Password</IonLabel>
                       <IonInput
                         type="password"
+                        placeholder="Password"
                         value={password}
                         onIonChange={(e) => setPassword(e.detail.value!)}
                         required

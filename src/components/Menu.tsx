@@ -93,48 +93,54 @@ const appPages: AppPage[] = [
 const Menu: React.FC = () => {
   const location = useLocation()
   const { user, logout } = useAuth()
+  const isDesktop = window.innerWidth > 768
 
   return (
-    <IonMenu contentId="main" type="overlay" className="mobile-menu">
-      <IonContent className="ion-no-padding">
-        <SafeArea>
+    <IonMenu 
+      contentId="main" 
+      type={isDesktop ? "push" : "overlay"}
+      className="sliding-menu"
+      menuId="main-menu"
+    >
+      <IonContent>
+        <div className="menu-content">
           <div
             className="menu-header ion-padding"
             style={{
-              paddingTop: isPlatform("ios") ? "calc(var(--ion-safe-area-top, 0) + 10px)" : "10px",
+              paddingTop: isPlatform("ios") ? "var(--ion-safe-area-top, 0)" : "16px",
             }}
           >
             <IonAvatar className="menu-avatar">
-              <img src="/placeholder.svg?height=80&width=80" alt="CESO Logo" />
+              <img src="https://lh3.googleusercontent.com/10WUdy85xFdDPBkguM31GvDuOj-8PGJP6cN9Ig4EQDc2R9v_6yaikU1cYUQHiRi9cywpA7zQHp2Gdh9WOQIDoyQ=w16383" alt="CESO Logo" />
             </IonAvatar>
           </div>
-          <IonList id="inbox-list">
+          <IonList id="inbox-list" className="ion-padding-top">
             <IonListHeader>CESO Menu</IonListHeader>
-            {user && <IonNote>Logged in as: {user.email}</IonNote>}
-            {appPages.map((appPage, index) => {
-              return (
-                <IonMenuToggle key={index} autoHide={false}>
-                  <IonItem
-                    className={location.pathname === appPage.url ? "selected" : ""}
-                    routerLink={appPage.url}
-                    routerDirection="none"
-                    lines="none"
-                    detail={false}
-                  >
-                    <IonIcon aria-hidden="true" slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
-                    <IonLabel>{appPage.title}</IonLabel>
-                  </IonItem>
-                </IonMenuToggle>
-              )
-            })}
+            {user && <IonNote className="ion-padding-start">Logged in as: {user.email}</IonNote>}
+            {appPages.map((appPage, index) => (
+              <IonMenuToggle key={index} autoHide={true}>
+                <IonItem
+                  className={location.pathname === appPage.url ? "selected" : ""}
+                  routerLink={appPage.url}
+                  routerDirection="root"
+                  lines="none"
+                  detail={false}
+                >
+                  <IonIcon aria-hidden="true" slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
+                  <IonLabel>{appPage.title}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+            ))}
             {user && (
-              <IonItem button onClick={logout} lines="none" detail={false}>
-                <IonIcon aria-hidden="true" slot="start" icon={logOutOutline} />
-                <IonLabel>Logout</IonLabel>
-              </IonItem>
+              <IonMenuToggle autoHide={true}>
+                <IonItem button onClick={logout} lines="none" detail={false}>
+                  <IonIcon aria-hidden="true" slot="start" icon={logOutOutline} />
+                  <IonLabel>Logout</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
             )}
           </IonList>
-        </SafeArea>
+        </div>
       </IonContent>
     </IonMenu>
   )

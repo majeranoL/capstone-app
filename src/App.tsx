@@ -46,6 +46,7 @@ import PrivateRoute from "./components/PrivateRoute"
 setupIonicReact({
   mode: "md", // Use Material Design style for all platforms for consistency
   animated: true,
+  swipeBackEnabled: false,
 })
 
 const App: React.FC = () => {
@@ -65,7 +66,11 @@ const App: React.FC = () => {
     <AuthProvider>
       <IonApp>
         <IonReactRouter>
-          <IonSplitPane contentId="main" when={window.location.pathname !== '/login' && window.location.pathname !== '/register'}>
+          <IonSplitPane 
+            contentId="main" 
+            when={(width) => width > 768}
+            disabled={window.location.pathname === '/login' || window.location.pathname === '/register'}
+          >
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/login" component={Login} exact />
