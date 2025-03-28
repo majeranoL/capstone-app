@@ -64,6 +64,7 @@ const appPages: AppPage[] = [
     iosIcon: calendarOutline,
     mdIcon: calendarSharp,
   },
+  /* Hidden menu items - uncomment when needed
   {
     title: "Programs & Initiatives",
     url: "/programs",
@@ -82,6 +83,7 @@ const appPages: AppPage[] = [
     iosIcon: newspaperOutline,
     mdIcon: newspaperSharp,
   },
+  */
   {
     title: "Gallery",
     url: "/gallery",
@@ -147,4 +149,3 @@ const Menu: React.FC = () => {
 }
 
 export default Menu
-
