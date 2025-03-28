@@ -105,7 +105,7 @@ const Dashboard: React.FC = () => {
                   </IonCardContent>
                 </IonCard>
               </IonCol>
-              <IonCol size="12" sizeMd="4">
+              {/* <IonCol size="12" sizeMd="4">
                 <IonCard>
                   <IonCardHeader>
                     <IonIcon icon={peopleOutline} color="primary" />
@@ -118,7 +118,7 @@ const Dashboard: React.FC = () => {
                     </IonButton>
                   </IonCardContent>
                 </IonCard>
-              </IonCol>
+              </IonCol> */}
               <IonCol size="12" sizeMd="4">
                 <IonCard>
                   <IonCardHeader>
@@ -137,7 +137,7 @@ const Dashboard: React.FC = () => {
           </IonGrid>
 
           {/* Featured Program */}
-          <h2 className="section-header">Featured Program</h2>
+          {/* <h2 className="section-header">Featured Program</h2>
           <IonCard>
             <IonImg src="/placeholder.svg?height=200&width=800" alt="Featured Program" />
             <IonCardHeader>
@@ -152,7 +152,7 @@ const Dashboard: React.FC = () => {
                 Learn More
               </IonButton>
             </IonCardContent>
-          </IonCard>
+          </IonCard> */}
         </SafeArea>
       </IonContent>
     </IonPage>
