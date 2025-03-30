@@ -17,7 +17,7 @@ import {
   IonSelect,
   IonSelectOption,
 } from "@ionic/react"
-import { mailOutline, lockClosedOutline } from "ionicons/icons"
+import { mailOutline, lockClosedOutline, eyeOutline, eyeOffOutline } from "ionicons/icons"
 import "./Register.css"
 
 const Register: React.FC = () => {
@@ -26,7 +26,6 @@ const Register: React.FC = () => {
     lastName: "",
     middleName: "",
     username: "",
-    email: "",
     password: "",
     confirmPassword: "",
     courseId: "",
@@ -51,6 +50,10 @@ const Register: React.FC = () => {
     { id: 3, name: "College of Arts and Sciences" },
   ])
 
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+
   const handlePasswordChange = (value: string) => {
     setFormData((prev) => ({ ...prev, password: value }))
     setPasswordCriteria({
@@ -62,7 +65,7 @@ const Register: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Add registration logic here
+    // New implementation will go here
   }
 
   return (
@@ -80,6 +83,7 @@ const Register: React.FC = () => {
                   value={formData.firstName}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, firstName: e.detail.value! }))}
                 />
+                {errors.firstName && <IonText color="danger">{errors.firstName}</IonText>}
               </IonItem>
 
               <IonItem>
@@ -89,6 +93,7 @@ const Register: React.FC = () => {
                   value={formData.middleName}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, middleName: e.detail.value! }))}
                 />
+                {errors.middleName && <IonText color="danger">{errors.middleName}</IonText>}
               </IonItem>
 
               <IonItem>
@@ -98,6 +103,7 @@ const Register: React.FC = () => {
                   value={formData.lastName}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, lastName: e.detail.value! }))}
                 />
+                {errors.lastName && <IonText color="danger">{errors.lastName}</IonText>}
               </IonItem>
 
               <IonItem>
@@ -107,23 +113,12 @@ const Register: React.FC = () => {
                   value={formData.username}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, username: e.detail.value! }))}
                 />
-              </IonItem>
-
-              <IonItem className="full-width">
-                <IonInput
-                  type="email"
-                  required
-                  placeholder="Email *"
-                  value={formData.email}
-                  onIonChange={(e) => setFormData((prev) => ({ ...prev, email: e.detail.value! }))}
-                >
-                  <IonIcon icon={mailOutline} slot="start" />
-                </IonInput>
+                {errors.username && <IonText color="danger">{errors.username}</IonText>}
               </IonItem>
 
               <div className="course-dept-container full-width">
                 <IonItem>
-                  <IonLabel position="stacked">Course *</IonLabel>
+                  <IonLabel position="stacked">Course</IonLabel>
                   <IonSelect
                     interface="popover"
                     placeholder="Select your course"
@@ -136,10 +131,11 @@ const Register: React.FC = () => {
                       </IonSelectOption>
                     ))}
                   </IonSelect>
+                  {errors.courseId && <IonText color="danger">{errors.courseId}</IonText>}
                 </IonItem>
 
                 <IonItem>
-                  <IonLabel position="stacked">Department *</IonLabel>
+                  <IonLabel position="stacked">Department</IonLabel>
                   <IonSelect
                     interface="popover"
                     placeholder="Select your department"
@@ -152,18 +148,26 @@ const Register: React.FC = () => {
                       </IonSelectOption>
                     ))}
                   </IonSelect>
+                  {errors.departmentId && <IonText color="danger">{errors.departmentId}</IonText>}
                 </IonItem>
               </div>
 
               <IonItem className="full-width">
                 <IonInput
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={formData.password}
                   onIonChange={(e) => handlePasswordChange(e.detail.value!)}
                 >
                   <IonIcon icon={lockClosedOutline} slot="start" />
+                  <IonIcon 
+                    icon={showPassword ? eyeOutline : eyeOffOutline} 
+                    slot="end" 
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="password-toggle"
+                  />
                 </IonInput>
+                {errors.password && <IonText color="danger">{errors.password}</IonText>}
               </IonItem>
 
               <div className="password-requirements full-width">
@@ -174,13 +178,20 @@ const Register: React.FC = () => {
 
               <IonItem className="full-width">
                 <IonInput
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm Password"
                   value={formData.confirmPassword}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, confirmPassword: e.detail.value! }))}
                 >
                   <IonIcon icon={lockClosedOutline} slot="start" />
+                  <IonIcon 
+                    icon={showConfirmPassword ? eyeOutline : eyeOffOutline} 
+                    slot="end" 
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="password-toggle"
+                  />
                 </IonInput>
+                {errors.confirmPassword && <IonText color="danger">{errors.confirmPassword}</IonText>}
               </IonItem>
               <IonButton expand="block" type="submit" className="register-button full-width">
                 Register
