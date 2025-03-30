@@ -1,12 +1,8 @@
 import type React from "react"
 import {
-  IonButtons,
   IonContent,
-  IonHeader,
-  IonMenuButton,
   IonPage,
-  IonTitle,
-  IonToolbar,
+  IonImg,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -16,29 +12,20 @@ import {
   IonCol,
   IonButton,
   IonIcon,
-  IonImg,
-  IonChip,
 } from "@ionic/react"
-import { calendarOutline, peopleOutline, newspaperOutline, arrowForward } from "ionicons/icons"
+import { calendarOutline, newspaperOutline, arrowForward } from "ionicons/icons"
 import SafeArea from "../components/SafeArea"
+import Header from "../components/Header"
 
 const Dashboard: React.FC = () => {
   return (
     <IonPage id="main">
-      <IonHeader className="ion-no-border">
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>Dashboard</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="Dashboard" />
       <IonContent className="ion-padding">
         <SafeArea>
           {/* Banner Image */}
           <IonImg src="sdca banner.png" alt="CESO Banner" className="header-banner" />
 
-          {/* Rest of the content remains the same */}
           {/* Welcome Card */}
           <IonCard>
             <IonCardHeader>
@@ -105,20 +92,6 @@ const Dashboard: React.FC = () => {
                   </IonCardContent>
                 </IonCard>
               </IonCol>
-              {/* <IonCol size="12" sizeMd="4">
-                <IonCard>
-                  <IonCardHeader>
-                    <IonIcon icon={peopleOutline} color="primary" />
-                    <IonCardTitle>Volunteer</IonCardTitle>
-                  </IonCardHeader>
-                  <IonCardContent>
-                    <p>Discover opportunities to volunteer in the community.</p>
-                    <IonButton expand="block" fill="outline" routerLink="/volunteer">
-                      Get Involved
-                    </IonButton>
-                  </IonCardContent>
-                </IonCard>
-              </IonCol> */}
               <IonCol size="12" sizeMd="4">
                 <IonCard>
                   <IonCardHeader>
@@ -135,24 +108,6 @@ const Dashboard: React.FC = () => {
               </IonCol>
             </IonRow>
           </IonGrid>
-
-          {/* Featured Program */}
-          {/* <h2 className="section-header">Featured Program</h2>
-          <IonCard>
-            <IonImg src="/placeholder.svg?height=200&width=800" alt="Featured Program" />
-            <IonCardHeader>
-              <IonChip color="primary" outline>
-                Featured
-              </IonChip>
-              <IonCardTitle>Community Outreach Program</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <p>Our flagship program focused on providing essential services to underserved communities.</p>
-              <IonButton expand="block" routerLink="/programs">
-                Learn More
-              </IonButton>
-            </IonCardContent>
-          </IonCard> */}
         </SafeArea>
       </IonContent>
     </IonPage>

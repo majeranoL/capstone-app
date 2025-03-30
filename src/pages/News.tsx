@@ -1,10 +1,9 @@
 import type React from "react"
+import { IonContent, IonPage } from "@ionic/react"
+import Header from "../components/Header"
 import {
   IonButtons,
-  IonContent,
-  IonHeader,
   IonMenuButton,
-  IonPage,
   IonTitle,
   IonToolbar,
   IonCard,
@@ -65,14 +64,7 @@ const News: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>News & Updates</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="News & Updates" />
       <IonContent className="ion-padding">
         {/* Banner Image */}
         <IonImg src="/placeholder.svg?height=150&width=800" alt="News Banner" className="header-banner" />

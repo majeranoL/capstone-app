@@ -1,12 +1,7 @@
 import type React from "react"
 import {
-  IonButtons,
   IonContent,
-  IonHeader,
-  IonMenuButton,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -26,6 +21,7 @@ import {
   IonCol,
 } from "@ionic/react"
 import { calendarOutline, locationOutline, timeOutline, peopleOutline, arrowForward } from "ionicons/icons"
+import Header from "../components/Header"
 
 const Events: React.FC = () => {
   // Sample events data
@@ -74,14 +70,7 @@ const Events: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>Upcoming Events</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="Upcoming Events" />
       <IonContent className="ion-padding">
         {/* Banner Image */}
         <IonImg src="/placeholder.svg?height=150&width=800" alt="Events Banner" className="header-banner" />

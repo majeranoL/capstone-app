@@ -1,12 +1,7 @@
 import type React from "react"
 import {
-  IonButtons,
   IonContent,
-  IonHeader,
-  IonMenuButton,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -21,22 +16,16 @@ import {
   IonAvatar,
 } from "@ionic/react"
 import { heartOutline, eyeOutline, ribbonOutline, mailOutline, callOutline, locationOutline } from "ionicons/icons"
+import Header from "../components/Header"
 
 const About: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>About CESO</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="About CESO" />
       <IonContent className="ion-padding">
         {/* Banner Image */}
         <IonImg 
-          src="Malasakit.jpg" 
+          src="/Malasakit.jpg" 
           alt="About CESO Banner" 
           className="header-banner" 
           style={{ 
@@ -44,7 +33,7 @@ const About: React.FC = () => {
             height: '300px', 
             marginBottom: '1rem',
             objectFit: 'fill',
-            
+          
           }} 
         />
 

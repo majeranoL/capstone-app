@@ -1,23 +1,6 @@
 import type React from "react"
-import {
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonImg,
-  IonSegment,
-  IonSegmentButton,
-  IonLabel,
-} from "@ionic/react"
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonImg, IonSegment, IonSegmentButton, IonLabel } from "@ionic/react"
+import Header from "../components/Header"
 
 const Gallery: React.FC = () => {
   // Sample gallery items
@@ -54,14 +37,7 @@ const Gallery: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>Gallery</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="Gallery" />
       <IonContent className="ion-padding">
         {/* Banner Image */}
         <IonImg src="/placeholder.svg?height=150&width=800" alt="Gallery Banner" className="header-banner" />

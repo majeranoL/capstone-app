@@ -1,7 +1,8 @@
 .menu-header {
   display: flex;
-  justify-content: center;
-  padding: 20px 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
   background-image: url('../../public/sdca banner.png');
   background-size: contain;
   background-position: center;
@@ -10,8 +11,8 @@
 
 .menu-avatar {
   background-color: maroon !important;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   margin: 0 auto;
   border: 3px solid var(--ion-color-primary);
 }

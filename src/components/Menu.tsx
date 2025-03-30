@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import { useState } from "react"
 import {
   IonContent,
   IonIcon,
@@ -14,6 +14,8 @@ import {
   IonNote,
   IonAvatar,
   isPlatform,
+  IonButton,
+  IonPopover,
 } from "@ionic/react"
 
 import { useLocation } from "react-router-dom"
@@ -33,6 +35,8 @@ import {
   imagesOutline,
   imagesSharp,
   logOutOutline,
+  notificationsOutline,
+  personOutline,
 } from "ionicons/icons"
 import "./Menu.css"
 import { useAuth } from "../contexts/AuthContext"
@@ -51,12 +55,6 @@ const appPages: AppPage[] = [
     url: "/dashboard",
     iosIcon: homeOutline,
     mdIcon: homeSharp,
-  },
-  {
-    title: "About CESO",
-    url: "/about",
-    iosIcon: informationCircleOutline,
-    mdIcon: informationCircleSharp,
   },
   {
     title: "Upcoming Events",
@@ -90,6 +88,12 @@ const appPages: AppPage[] = [
     iosIcon: imagesOutline,
     mdIcon: imagesSharp,
   },
+  {
+    title: "About CESO",
+    url: "/about",
+    iosIcon: informationCircleOutline,
+    mdIcon: informationCircleSharp,
+  },
 ]
 
 const Menu: React.FC = () => {
@@ -110,15 +114,16 @@ const Menu: React.FC = () => {
             className="menu-header ion-padding"
             style={{
               paddingTop: isPlatform("ios") ? "var(--ion-safe-area-top, 0)" : "16px",
+              display: "flex",
+              alignItems: "center",
             }}
           >
             <IonAvatar className="menu-avatar">
-              <img src="https://lh3.googleusercontent.com/10WUdy85xFdDPBkguM31GvDuOj-8PGJP6cN9Ig4EQDc2R9v_6yaikU1cYUQHiRi9cywpA7zQHp2Gdh9WOQIDoyQ=w16383" alt="CESO Logo" />
+              <img src="CESOlogo.png" alt="CESO Logo" />
             </IonAvatar>
           </div>
           <IonList id="inbox-list" className="ion-padding-top">
             <IonListHeader>CESO Menu</IonListHeader>
-            {user && <IonNote className="ion-padding-start">Logged in as: {user.email}</IonNote>}
             {appPages.map((appPage, index) => (
               <IonMenuToggle key={index} autoHide={true}>
                 <IonItem

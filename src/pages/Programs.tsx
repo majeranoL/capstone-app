@@ -1,12 +1,7 @@
 import type React from "react"
 import {
-  IonButtons,
   IonContent,
-  IonHeader,
-  IonMenuButton,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -21,6 +16,7 @@ import {
   IonBadge,
 } from "@ionic/react"
 import { arrowForward } from "ionicons/icons"
+import Header from "../components/Header"
 
 const Programs: React.FC = () => {
   // Sample programs data
@@ -62,14 +58,7 @@ const Programs: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>Programs & Initiatives</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="Programs & Initiatives" />
       <IonContent className="ion-padding">
         {/* Banner Image */}
         <IonImg src="/placeholder.svg?height=150&width=800" alt="Programs Banner" className="header-banner" />

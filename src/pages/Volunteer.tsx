@@ -1,82 +1,44 @@
 import type React from "react"
 import {
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar,
   IonCard,
+  IonContent,
+  IonImg,
+  IonPage,
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
+  IonChip,
+  IonBadge,
+  IonList,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonButton,
   IonGrid,
   IonRow,
   IonCol,
-  IonImg,
-  IonButton,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonChip,
-  IonBadge,
 } from "@ionic/react"
-import { timeOutline, locationOutline, arrowForward } from "ionicons/icons"
+import { timeOutline, locationOutline, arrowForward } from 'ionicons/icons'
+import Header from "../components/Header"
+
+const opportunities = [
+  {
+    id: 1,
+    title: "Community Support Worker",
+    category: "Social Services",
+    openings: 5,
+    description: "Help support local community programs and initiatives.",
+    commitment: "10 hours/week",
+    location: "Various Locations"
+  },
+  // Add more opportunities as needed
+]
 
 const Volunteer: React.FC = () => {
-  // Sample volunteer opportunities
-  const opportunities = [
-    {
-      id: 1,
-      title: "Literacy Tutor",
-      description: "Help adults and children improve their reading and writing skills.",
-      commitment: "2 hours/week, 3-month minimum",
-      location: "Various Community Centers",
-      openings: 10,
-      category: "Education",
-    },
-    {
-      id: 2,
-      title: "Health Fair Volunteer",
-      description: "Assist with organizing and running community health fairs.",
-      commitment: "One-time event, 4-6 hours",
-      location: "City Park",
-      openings: 15,
-      category: "Health",
-    },
-    {
-      id: 3,
-      title: "Environmental Cleanup Crew",
-      description: "Join our team in cleaning up local parks and waterways.",
-      commitment: "Monthly, 3 hours per session",
-      location: "Various Locations",
-      openings: 20,
-      category: "Environment",
-    },
-    {
-      id: 4,
-      title: "Youth Mentor",
-      description: "Provide guidance and support to youth in our mentorship program.",
-      commitment: "4 hours/week, 6-month minimum",
-      location: "Schools and Community Centers",
-      openings: 8,
-      category: "Youth",
-    },
-  ]
-
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>Volunteer Opportunities</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
+      <Header title="Volunteer Opportunities" />
+      <IonContent>
         {/* Banner Image */}
         <IonImg src="/placeholder.svg?height=150&width=800" alt="Volunteer Banner" className="header-banner" />
 

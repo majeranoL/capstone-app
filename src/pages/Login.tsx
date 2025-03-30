@@ -76,12 +76,14 @@ const Login: React.FC = () => {
         <IonGrid>
           <IonRow className="ion-justify-content-center">
             <IonCol size="12" sizeMd="8" sizeLg="6">
-              <div className="ion-text-center ion-padding">
+                <div className="ion-text-center ion-padding">
+                <div style={{ background: '#800000', display: 'inline-block', padding: '10px', borderRadius: '50%' }}>
                 <IonImg
-                  src="/placeholder.svg?height=80&width=80"
-                  alt="CESO Logo"
-                  style={{ margin: "0 auto", width: "100px", height: "100px" }}
+                src="CESOlogo.png"
+                alt="CESO Logo"
+                style={{ margin: "0 auto", width: "100px", height: "100px" }}
                 />
+                </div>
                 <h1 style={{ color: "var(--ion-color-primary)" }}>CESO</h1>
                 <p>Community Extension Services Office</p>
               </div>
