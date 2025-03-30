@@ -2,9 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100%;
+  height: 100%;
   padding: 16px;
-  max-width: 400px;
   margin: 0 auto;
 }
 
@@ -13,8 +12,45 @@
   border-radius: 10px;
   padding: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 400px; /* Default width for mobile */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-form ion-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0px;
+}
+
+.course-dept-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  grid-column: 1 / -1; /* Make it span full width */
+}
+
+/* Media query for web/desktop screens */
+@media (min-width: 768px) {
+  .register-form {
+    max-width: 800px; /* Wider form for desktop */
+  }
+
+  .register-form ion-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Make certain items span full width */
+  .register-form ion-list .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .course-dept-container {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Make course and department side by side */
+    gap: 16px;
+  }
 }
 
 .register-form ion-item {
@@ -70,6 +106,27 @@
   text-align: left;  /* Changed from center to left */
   display: flex;
   align-items: center;
+}
+
+.register-form ion-select {
+  --padding-start: 16px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  min-height: 45px;
+  max-width: 100%;
+  text-align: right;  /* Align text to the right */
+  justify-content: flex-end;  /* Move content to the right */
+}
+
+.register-form ion-select::part(placeholder),
+.register-form ion-select::part(text) {
+  color: #666;
+  opacity: 1;
+  text-align: right;  /* Align placeholder to the right */
+}
+
+.register-form ion-select::part(icon) {
+  margin-left: auto;  /* Push icon to the right */
 }
 
 .register-title {

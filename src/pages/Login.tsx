@@ -77,9 +77,9 @@ const Login: React.FC = () => {
           <IonRow className="ion-justify-content-center">
             <IonCol size="12" sizeMd="8" sizeLg="6">
                 <div className="ion-text-center ion-padding">
-                <div style={{ background: '#800000', display: 'inline-block', padding: '10px', borderRadius: '50%' }}>
+                <div style={{ display: 'inline-block', padding: '10px', borderRadius: '50%' }}>
                 <IonImg
-                src="CESOlogo.png"
+                src="CISO.png"
                 alt="CESO Logo"
                 style={{ margin: "0 auto", width: "100px", height: "100px" }}
                 />

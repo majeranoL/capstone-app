@@ -14,6 +14,8 @@ import {
   IonIcon,
   IonRouterLink,
   IonList,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react"
 import { mailOutline, lockClosedOutline } from "ionicons/icons"
 import "./Register.css"
@@ -22,10 +24,13 @@ const Register: React.FC = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    middleName: "",
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    courseId: "",
+    departmentId: "",
   })
 
   const [passwordCriteria, setPasswordCriteria] = useState({
@@ -33,6 +38,18 @@ const Register: React.FC = () => {
     special: false,
     capital: false,
   })
+
+  const [courses] = useState([
+    { id: 1, name: "BS Information Technology" },
+    { id: 2, name: "BS Computer Science" },
+    { id: 3, name: "BS Information Systems" },
+  ])
+
+  const [departments] = useState([
+    { id: 1, name: "College of Computing Studies" },
+    { id: 2, name: "College of Engineering" },
+    { id: 3, name: "College of Arts and Sciences" },
+  ])
 
   const handlePasswordChange = (value: string) => {
     setFormData((prev) => ({ ...prev, password: value }))
@@ -67,7 +84,17 @@ const Register: React.FC = () => {
 
               <IonItem>
                 <IonInput
-                  placeholder="Last Name"
+                  required
+                  placeholder="Middle Name *"
+                  value={formData.middleName}
+                  onIonChange={(e) => setFormData((prev) => ({ ...prev, middleName: e.detail.value! }))}
+                />
+              </IonItem>
+
+              <IonItem>
+                <IonInput
+                  required
+                  placeholder="Last Name *"
                   value={formData.lastName}
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, lastName: e.detail.value! }))}
                 />
@@ -82,7 +109,7 @@ const Register: React.FC = () => {
                 />
               </IonItem>
 
-              <IonItem>
+              <IonItem className="full-width">
                 <IonInput
                   type="email"
                   required
@@ -94,7 +121,41 @@ const Register: React.FC = () => {
                 </IonInput>
               </IonItem>
 
-              <IonItem>
+              <div className="course-dept-container full-width">
+                <IonItem>
+                  <IonLabel position="stacked">Course *</IonLabel>
+                  <IonSelect
+                    interface="popover"
+                    placeholder="Select your course"
+                    value={formData.courseId}
+                    onIonChange={(e) => setFormData((prev) => ({ ...prev, courseId: e.detail.value }))}
+                  >
+                    {courses.map((course) => (
+                      <IonSelectOption key={course.id} value={course.id}>
+                        {course.name}
+                      </IonSelectOption>
+                    ))}
+                  </IonSelect>
+                </IonItem>
+
+                <IonItem>
+                  <IonLabel position="stacked">Department *</IonLabel>
+                  <IonSelect
+                    interface="popover"
+                    placeholder="Select your department"
+                    value={formData.departmentId}
+                    onIonChange={(e) => setFormData((prev) => ({ ...prev, departmentId: e.detail.value }))}
+                  >
+                    {departments.map((dept) => (
+                      <IonSelectOption key={dept.id} value={dept.id}>
+                        {dept.name}
+                      </IonSelectOption>
+                    ))}
+                  </IonSelect>
+                </IonItem>
+              </div>
+
+              <IonItem className="full-width">
                 <IonInput
                   type="password"
                   placeholder="Password"
@@ -105,13 +166,13 @@ const Register: React.FC = () => {
                 </IonInput>
               </IonItem>
 
-              <div className="password-requirements">
+              <div className="password-requirements full-width">
                 <IonText color={passwordCriteria.length ? "success" : "medium"}>• 8-20 characters</IonText>
                 <IonText color={passwordCriteria.special ? "success" : "medium"}>• Special character</IonText>
                 <IonText color={passwordCriteria.capital ? "success" : "medium"}>• Capital letter</IonText>
               </div>
 
-              <IonItem>
+              <IonItem className="full-width">
                 <IonInput
                   type="password"
                   placeholder="Confirm Password"
@@ -121,12 +182,10 @@ const Register: React.FC = () => {
                   <IonIcon icon={lockClosedOutline} slot="start" />
                 </IonInput>
               </IonItem>
-
-              <IonButton expand="block" type="submit" className="register-button">
+              <IonButton expand="block" type="submit" className="register-button full-width">
                 Register
               </IonButton>
-
-              <div className="login-link">
+              <div className="login-link full-width">
                 <IonRouterLink routerLink="/login">Already have an account? Login</IonRouterLink>
               </div>
             </IonList>
