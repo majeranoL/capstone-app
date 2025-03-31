@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { useIonToast } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 import {
@@ -22,7 +22,8 @@ import {
 import { mailOutline, lockClosedOutline, eyeOutline, eyeOffOutline } from "ionicons/icons"
 import "./Register.css"
 
-const API_URL = 'http://localhost/app/Index.php/RegisterController/Register' 
+// Update API URL to use correct case and port
+const API_URL = 'http://localhost:80/app/index.php/RegisterController/register';
 
 interface RegistrationResponse {
   success: boolean
@@ -39,10 +40,12 @@ const Register: React.FC = () => {
     lastName: "",
     middleName: "",
     username: "",
+    email: "",
     password: "",
     confirmPassword: "",
     courseId: "",
     departmentId: "",
+    profileImage: null as File | null,
   })
 
   const [passwordCriteria, setPasswordCriteria] = useState({
@@ -69,6 +72,29 @@ const Register: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [present] = useIonToast()
   const history = useHistory()
+  const [imageUrl, setImageUrl] = useState<string>("");
+
+  const saveImage = useCallback(async (file: File): Promise<string> => {
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('http://localhost/app/uploads/profile_images', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
+      return data.imageUrl; // The server should return the URL of the saved image
+    } catch (error) {
+      console.error('Error saving image:', error);
+      throw new Error('Failed to save image');
+    }
+  }, []);
 
   const handlePasswordChange = (value: string) => {
     setFormData((prev) => ({ ...prev, password: value }))
@@ -78,6 +104,23 @@ const Register: React.FC = () => {
       capital: /[A-Z]/.test(value),
     })
   }
+
+  const handleImageUpload = async (file: File | null) => {
+    if (file) {
+      try {
+        // Create a preview URL for the image
+        const previewUrl = URL.createObjectURL(file);
+        setImageUrl(previewUrl);
+        setFormData(prev => ({ ...prev, profileImage: file }));
+      } catch (error) {
+        console.error('Error handling image upload:', error);
+        setErrors(prev => ({ 
+          ...prev, 
+          profileImage: 'Failed to handle image' 
+        }));
+      }
+    }
+  };
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {}
@@ -94,6 +137,11 @@ const Register: React.FC = () => {
     }
     if (!formData.username.trim()) {
       newErrors.username = 'Username is required'
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email format'
     }
     if (!formData.courseId) {
       newErrors.courseId = 'Please select a course'
@@ -116,110 +164,101 @@ const Register: React.FC = () => {
       newErrors.confirmPassword = 'Passwords do not match'
     }
 
+    // Add image validation
+    if (formData.profileImage) {
+      const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      if (!validTypes.includes(formData.profileImage.type)) {
+        newErrors.profileImage = 'Only JPG, JPEG and PNG files are allowed';
+      }
+      if (formData.profileImage.size > 2 * 1024 * 1024) { // 2MB limit
+        newErrors.profileImage = 'Image file size should not exceed 2MB';
+      }
+    }
+
     return newErrors
   }
 
   const registerUser = async (userData: typeof formData) => {
     try {
-      const formDataToSend = new URLSearchParams();
-      formDataToSend.append('firstName', userData.firstName);
-      formDataToSend.append('middleName', userData.middleName);
-      formDataToSend.append('lastName', userData.lastName);
-      formDataToSend.append('username', userData.username);
-      formDataToSend.append('password', userData.password);
-      formDataToSend.append('courseId', userData.courseId as string);
-      formDataToSend.append('departmentId', userData.departmentId as string);
+      // First check if we can reach the server
+      try {
+        await fetch('http://localhost:80');
+      } catch {
+        throw new Error(
+          'Server connection failed!\n\n' +
+          '1. Open XAMPP Control Panel\n' +
+          '2. Start Apache (should be green)\n' +
+          '3. Start MySQL (should be green)\n' +
+          '4. Check if another program is using port 80\n' +
+          '5. Make sure your backend is in xampp/htdocs/app'
+        );
+      }
 
-      const response = await fetch('http://localhost/app/Index.php/RegisterController/Register', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formDataToSend,
-        mode: 'cors',
+      const formDataToSend = new FormData();
+      Object.entries(userData).forEach(([key, value]) => {
+        if (key !== 'confirmPassword' && value !== null && value !== '') {
+          formDataToSend.append(key, value);
+        }
       });
 
-      const responseText = await response.text();
-      console.log('Raw server response:', responseText); 
-
-      
-      if (!responseText.trim()) {
-        return {
-          success: true,
-          message: 'Registration successful',
-          user: null
-        };
-      }
-
-      let data;
-      try {
-       
-        data = JSON.parse(responseText);
-      } catch (e) {
-        
-        if (responseText.includes('Fatal error') || responseText.includes('<br />')) {
-          const errorMessage = responseText.split('<br />')[0].replace(/<[^>]+>/g, '');
-          throw new Error(errorMessage || 'Server error occurred');
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json',
         }
-        return {
-          success: true,
-          message: responseText,
-          user: null
-        };
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('API endpoint not found. Check your backend path.');
+        }
+        throw new Error(`Server error: ${response.status}`);
       }
 
-      // Handle parsed JSON response
-      if (data && typeof data === 'object') {
-        return {
-          success: data.success || true,
-          message: data.message || 'Registration successful',
-          user: data.user || null
-        };
-      }
+      const result = await response.json();
+      return result;
 
-      // Fallback response
-      return {
-        success: true,
-        message: 'Registration completed',
-        user: null
-      };
-
-    } catch (error) {
-      console.error('Registration error details:', error);
-      throw new Error(error instanceof Error ? error.message : 'Registration failed');
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      throw error;
     }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    setErrors({});
     
-    const validationErrors = validateForm()
-    
+    const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-      return
+      setErrors(validationErrors);
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await registerUser(formData)
+      const result = await registerUser(formData);
+      console.log('Registration result:', result); // Debug log
       
+      if (result.success) {
+        present({
+          message: 'Registration successful!',
+          duration: 3000,
+          color: 'success'
+        });
+        history.push('/login');
+      } else {
+        throw new Error(result.message || 'Registration failed');
+      }
+    } catch (error: any) {
       present({
-        message: 'Registration successful!',
-        duration: 3000,
-        color: 'success'
-      })
-
-      history.push('/login')
-    } catch (error) {
-      present({
-        message: error instanceof Error ? error.message : 'Registration failed',
-        duration: 3000,
-        color: 'danger'
-      })
+        message: error.message,
+        duration: 5000,
+        color: 'danger',
+        position: 'middle'
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -269,6 +308,51 @@ const Register: React.FC = () => {
                   onIonChange={(e) => setFormData((prev) => ({ ...prev, username: e.detail.value! }))}
                 />
                 {errors.username && <IonText color="danger">{errors.username}</IonText>}
+              </IonItem>
+
+              <IonItem className="full-width">
+                <IonLabel position="stacked">Profile Image (Optional)</IonLabel>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/jpg"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] || null;
+                    handleImageUpload(file);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    margin: '8px 0',
+                    border: 'none',
+                    background: 'transparent',
+                    color: 'var(--ion-color-medium)'
+                  }}
+                />
+                {formData.profileImage && (
+                  <div style={{ marginTop: '8px' }}>
+                    Selected: {formData.profileImage.name}
+                    {imageUrl && <img src={imageUrl} alt="Preview" style={{ 
+                      width: '100px', 
+                      height: '100px', 
+                      objectFit: 'cover',
+                      marginLeft: '10px'
+                    }} />}
+                  </div>
+                )}
+                {errors.profileImage && <IonText color="danger">{errors.profileImage}</IonText>}
+              </IonItem>
+
+              <IonItem className="full-width">
+                <IonInput
+                  required
+                  type="email"
+                  placeholder="Email *"
+                  value={formData.email}
+                  onIonChange={(e) => setFormData((prev) => ({ ...prev, email: e.detail.value! }))}
+                >
+                  <IonIcon icon={mailOutline} slot="start" />
+                </IonInput>
+                {errors.email && <IonText color="danger">{errors.email}</IonText>}
               </IonItem>
 
               <div className="course-dept-container full-width">
