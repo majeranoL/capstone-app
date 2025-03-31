@@ -11,7 +11,7 @@ import {
   IonIcon,
   IonLabel
 } from '@ionic/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { notificationsOutline, personOutline } from 'ionicons/icons';
 import { useAuth } from '../contexts/AuthContext';
 import './Header.css';
@@ -20,9 +20,28 @@ interface HeaderProps {
   title: string;
 }
 
+interface UserData {
+  username: string;
+  first_name: string;
+  last_name: string;
+}
+
 const Header: React.FC<HeaderProps> = ({ title }) => {
   const { user } = useAuth();
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [popoverState, setPopoverState] = useState({ showPopover: false, event: undefined });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUserData(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const getFullName = (userData: UserData | null) => {
+    if (!userData) return 'User';
+    return `${userData.first_name} ${userData.last_name}`;
+  };
 
   return (
     <IonHeader className="main-header">
@@ -31,10 +50,12 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           <IonMenuButton />
         </IonButtons>
         <IonTitle>{title}</IonTitle>
-        {user && (
+        {(user || userData) && (
           <IonButtons slot="end" className="profile-section">
             <div className="user-info">
-              <span className="user-name white-text">{user.displayName || user.email}</span>
+              <span className="user-name white-text">
+                {getFullName(userData)}
+              </span>
             </div>
             <IonAvatar 
               className="header-avatar"

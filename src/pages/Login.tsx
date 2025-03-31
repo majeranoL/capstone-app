@@ -26,7 +26,7 @@ import { logInOutline, personAddOutline } from "ionicons/icons"
 import { useHistory } from "react-router-dom"
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("")
+  const [Username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [isLogin, setIsLogin] = useState(true)
   const [showLoading, setShowLoading] = useState(false)
@@ -35,35 +35,52 @@ const Login: React.FC = () => {
   const history = useHistory()
   const router = useIonRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Clear any existing session data
+    localStorage.clear();
+    sessionStorage.clear();
+
     // Validate form
-    if (!email || !password) {
+    if (!Username || !password) {
       setAlertMessage("Please fill in all fields")
       setShowAlert(true)
       return
     }
 
-    // Show loading
     setShowLoading(true)
 
-    // Simulate API call
-    setTimeout(() => {
-      setShowLoading(false)
+    try {
+      const response = await fetch('http://localhost/app/Index.php/LoginController/Login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: Username,
+          password: password
+        })
+      });
 
-      // For demo purposes, any login succeeds
-      if (isLogin) {
-        // Store user info in localStorage (in a real app, you'd use a more secure method)
-        localStorage.setItem("user", JSON.stringify({ email }))
-        window.location.href = "/dashboard"
+      const data = await response.json();
+      
+      if (data.status) {
+        // Login successful
+        localStorage.setItem('user', JSON.stringify(data.user));
+        // Force a page reload and redirect
+        window.location.href = '/dashboard';
       } else {
-        // Signup success
-        setAlertMessage("Account created successfully! Please log in.")
-        setShowAlert(true)
-        setIsLogin(true)
+        // Login failed
+        setAlertMessage(data.message);
+        setShowAlert(true);
       }
-    }, 1500)
+    } catch (error) {
+      setAlertMessage("Network error. Please try again.");
+      setShowAlert(true);
+    } finally {
+      setShowLoading(false);
+    }
   }
 
   const handleSignUpClick = () => {
@@ -95,10 +112,10 @@ const Login: React.FC = () => {
                   <form onSubmit={handleSubmit}>
                     <IonItem>
                       <IonInput
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onIonChange={(e) => setEmail(e.detail.value!)}
+                        type="text"
+                        placeholder="Username"
+                        value={Username}
+                        onIonChange={(e) => setUsername(e.detail.value!)}
                         required
                       />
                     </IonItem>

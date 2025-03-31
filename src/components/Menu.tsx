@@ -101,6 +101,11 @@ const Menu: React.FC = () => {
   const { user, logout } = useAuth()
   const isDesktop = window.innerWidth > 768
 
+  const handleLogout = async () => {
+    await logout()
+    window.location.reload()
+  }
+
   return (
     <IonMenu 
       contentId="main" 
@@ -140,7 +145,7 @@ const Menu: React.FC = () => {
             ))}
             {user && (
               <IonMenuToggle autoHide={true}>
-                <IonItem button onClick={logout} lines="none" detail={false}>
+                <IonItem button onClick={handleLogout} lines="none" detail={false}>
                   <IonIcon aria-hidden="true" slot="start" icon={logOutOutline} />
                   <IonLabel>Logout</IonLabel>
                 </IonItem>
